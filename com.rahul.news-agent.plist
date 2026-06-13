@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.rahul.news-agent</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/zsh</string>
+        <string>/Users/rahulkandru/Documents/technical/news-agent/bin/run.sh</string>
+    </array>
+
+    <!-- 7:03 AM local time (machine is IST). launchd coalesces missed runs into one
+         on next wake; run.sh's catch-up logic covers the whole gap. -->
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>7</integer>
+        <key>Minute</key>
+        <integer>3</integer>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/rahulkandru/Documents/technical/news-agent/logs/launchd.out</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/rahulkandru/Documents/technical/news-agent/logs/launchd.err</string>
+</dict>
+</plist>
