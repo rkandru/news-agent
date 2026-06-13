@@ -66,7 +66,7 @@ if [[ $rc -ne 0 || ! -s "$DIGEST" ]]; then
   exit 1
 fi
 
-# --- pull the SUBJECT: line out for the commit message; strip it from the saved markdown ---
+# --- pull the SUBJECT: line out for the gist description; strip it from the saved markdown ---
 SUBJECT=$(head -n1 "$DIGEST" | sed -n 's/^SUBJECT:[[:space:]]*//p')
 if [[ -n "$SUBJECT" ]]; then
   tmp=$(mktemp)
@@ -76,26 +76,24 @@ else
   SUBJECT="AI Daily — $TODAY"
 fi
 
-# --- commit & push the digest ---
-git add "$DIGEST"
-if git diff --cached --quiet; then
-  echo "No digest changes to commit."
-else
-  git commit -m "$SUBJECT" -m "Digest for $TODAY (window since $SINCE)"
+# --- deliver: add/update today's file in the gist ---
+if [[ -z "${GIST_ID:-}" ]]; then
+  echo "FAILURE: GIST_ID not set in config.env. last_run NOT advanced."
+  exit 1
 fi
 
-if git remote | grep -q .; then
-  if git push; then
-    echo "Pushed digest for $TODAY"
-  else
-    echo "FAILURE: git push failed (digest committed locally). last_run NOT advanced."
-    exit 1
-  fi
+if "$PYTHON" bin/update_gist.py \
+     --gist-id "$GIST_ID" \
+     --filename "$TODAY.md" \
+     --content-file "$DIGEST" \
+     --description "$SUBJECT"; then
+  echo "Gist updated for $TODAY"
 else
-  echo "No git remote configured; digest committed locally only."
+  echo "FAILURE: gist update failed (digest saved at $DIGEST). last_run NOT advanced."
+  exit 1
 fi
 
-# --- advance the window only after the digest is safely committed/pushed ---
+# --- advance the window only after the digest is delivered ---
 echo "$TODAY" >state/last_run
 echo "Done: $SUBJECT"
 echo "===== Run finished $(date) ====="
