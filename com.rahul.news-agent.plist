@@ -8,7 +8,7 @@
     <key>ProgramArguments</key>
     <array>
         <string>/bin/zsh</string>
-        <string>/Users/rahulkandru/Documents/technical/news-agent/bin/run.sh</string>
+        <string>/Users/rahulkandru/news-agent/bin/run.sh</string>
     </array>
 
     <!-- 7:03 AM local time (machine is IST). launchd coalesces missed runs into one
@@ -25,8 +25,8 @@
     <false/>
 
     <key>StandardOutPath</key>
-    <string>/Users/rahulkandru/Documents/technical/news-agent/logs/launchd.out</string>
+    <string>/Users/rahulkandru/news-agent/logs/launchd.out</string>
     <key>StandardErrorPath</key>
-    <string>/Users/rahulkandru/Documents/technical/news-agent/logs/launchd.err</string>
+    <string>/Users/rahulkandru/news-agent/logs/launchd.err</string>
 </dict>
 </plist>

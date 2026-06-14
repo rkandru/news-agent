@@ -8,7 +8,7 @@ set -uo pipefail
 export PATH="/Users/rahulkandru/.local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 CLAUDE="/Users/rahulkandru/.local/bin/claude"
 PYTHON="/opt/homebrew/opt/python@3.12/libexec/bin/python3"
-REPO="/Users/rahulkandru/Documents/technical/news-agent"
+REPO="/Users/rahulkandru/news-agent"
 
 cd "$REPO" || exit 1
 mkdir -p digests logs state
