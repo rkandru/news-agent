@@ -85,9 +85,10 @@ fi
 if "$PYTHON" bin/update_gist.py \
      --gist-id "$GIST_ID" \
      --filename "$TODAY.md" \
+     --extra-filename "0-latest.md" \
      --content-file "$DIGEST" \
      --description "$SUBJECT"; then
-  echo "Gist updated for $TODAY"
+  echo "Gist updated for $TODAY (+ 0-latest.md)"
 else
   echo "FAILURE: gist update failed (digest saved at $DIGEST). last_run NOT advanced."
   exit 1

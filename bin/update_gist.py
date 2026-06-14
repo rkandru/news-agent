@@ -74,6 +74,8 @@ def main() -> int:
     ap.add_argument("--public", action="store_true", help="only used with --create")
     ap.add_argument("--gist-id")
     ap.add_argument("--filename", required=True)
+    ap.add_argument("--extra-filename", help="optional 2nd file written with the same content "
+                                             "(e.g. 0-latest.md, which sorts to the top of the gist)")
     ap.add_argument("--content-file", required=True)
     ap.add_argument("--description", default="")
     args = ap.parse_args()
@@ -86,9 +88,12 @@ def main() -> int:
     with open(args.content_file, "r", encoding="utf-8") as f:
         content = f.read()
 
+    files = {args.filename: {"content": content}}
+    if args.extra_filename:
+        files[args.extra_filename] = {"content": content}
     payload = {
         "description": args.description,
-        "files": {args.filename: {"content": content}},
+        "files": files,
     }
 
     try:
